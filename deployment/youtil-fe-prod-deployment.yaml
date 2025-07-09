@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: youtil-fe-prod
+  namespace: youtil-prod
+spec:
+  revisionHistoryLimit: 2
+  replicas: 1
+  selector:
+    matchLabels:
+      app: youtil-fe-prod
+  template:
+    metadata:
+      labels:
+        app: youtil-fe-prod
+    spec:
+      nodeSelector:
+        node-role.kubernetes.io/worker: "true"
+      containers:
+        - name: youtil-fe-prod
+          image: asia-northeast3-docker.pkg.dev/youtil-459908/youtil-docker-registry/youtil-fe-prod:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 3000
+      imagePullSecrets:
+        - name: regcred

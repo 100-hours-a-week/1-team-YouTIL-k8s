@@ -1,0 +1,33 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: youtil-ingress-prod
+  namespace: youtil-prod
+spec:
+  ingressClassName: nginx
+  defaultBackend:
+    service:
+      name: youtil-fe-service-prod
+      port:
+        number: 80
+  rules:
+    - host: youtil.co.kr
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: youtil-fe-service-prod
+                port:
+                  number: 80
+    - host: api.youtil.co.kr
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: youtil-be-service-prod
+                port:
+                  number: 80
