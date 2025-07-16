@@ -1,0 +1,109 @@
+# Default values for youtil-backend
+# This is a YAML-formatted file.
+
+replicaCount: 1
+
+image:
+  repository: asia-northeast3-docker.pkg.dev/noted-hangout-464805-q6/youtil-docker-registry/youtil-be-prod
+  pullPolicy: Always
+  tag: "latest"
+
+imagePullSecrets:
+  - name: regcred
+
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  create: false
+  name: ""
+
+podAnnotations: {}
+
+podSecurityContext: {}
+
+securityContext: {}
+
+service:
+  type: LoadBalancer
+  port: 80
+  targetPort: 8080
+  loadBalancerIP: ""  # GCP에서 자동 할당
+  # NodePort 설정 (LoadBalancer 대신 사용할 경우)
+  # type: NodePort
+  # nodePort: 32080
+
+ingress:
+  enabled: false  # LoadBalancer 사용 시 기본적으로 비활성화
+  className: nginx
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+  hosts:
+    - host: ""
+      paths:
+        - path: /
+          pathType: Prefix
+  tls: []
+
+resources:
+  limits:
+    cpu: 500m
+    memory: 512Mi
+  requests:
+    cpu: 250m
+    memory: 256Mi
+
+tolerations: []
+
+affinity: {}
+
+# Environment variables
+env: []
+# - name: DATABASE_URL
+#   value: "postgresql://user:password@host:port/database"
+# - name: REDIS_URL
+#   value: "redis://host:port"
+
+# ConfigMap data
+configMap:
+  enabled: false
+  data: {}
+  # config.yaml: |
+  #   database:
+  #     host: localhost
+  #     port: 5432
+
+# Secret data
+secret:
+  enabled: false
+  data: {}
+  # database-password: base64-encoded-password
+
+# Health check configuration
+livenessProbe:
+  enabled: true
+  httpGet:
+    path: /health
+    port: 8080
+  initialDelaySeconds: 30
+  periodSeconds: 10
+  timeoutSeconds: 5
+  failureThreshold: 3
+
+readinessProbe:
+  enabled: true
+  httpGet:
+    path: /health
+    port: 8080
+  initialDelaySeconds: 5
+  periodSeconds: 5
+  timeoutSeconds: 3
+  failureThreshold: 3
+
+# Horizontal Pod Autoscaler
+hpa:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 5
+  targetCPUUtilizationPercentage: 80
+  targetMemoryUtilizationPercentage: 80 

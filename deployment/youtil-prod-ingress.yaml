@@ -3,13 +3,16 @@ kind: Ingress
 metadata:
   name: youtil-ingress-prod
   namespace: youtil-prod
+  annotations:
+    kubernetes.io/ingress.class: alb
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP":80,"HTTPS":443}]'
+    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:ap-northeast-2:854383975470:certificate/eeef5111-7aa0-411a-a2e9-456ab8c2b533
+    alb.ingress.kubernetes.io/ssl-redirect: '443'
+    alb.ingress.kubernetes.io/healthcheck-path: /login
 spec:
-  ingressClassName: nginx
-  defaultBackend:
-    service:
-      name: youtil-fe-service-prod
-      port:
-        number: 80
+  ingressClassName: alb
   rules:
     - host: youtil.co.kr
       http:

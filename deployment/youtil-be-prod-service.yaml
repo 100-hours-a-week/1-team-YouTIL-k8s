@@ -4,11 +4,10 @@ metadata:
   name: youtil-be-service-prod
   namespace: youtil-prod
 spec:
-  type: NodePort
+  type: ClusterIP
   selector:
     app: youtil-be-prod
   ports:
     - protocol: TCP
       port: 80
       targetPort: 8080
-      nodePort: 32080

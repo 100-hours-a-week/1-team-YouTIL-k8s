@@ -1,0 +1,64 @@
+# Production values for youtil-backend (GCP optimized)
+
+replicaCount: 3
+
+image:
+  repository: asia-northeast3-docker.pkg.dev/noted-hangout-464805-q6/youtil-docker-registry/youtil-be-prod
+  tag: "latest"
+
+service:
+  type: LoadBalancer
+  port: 80
+  targetPort: 8080
+  loadBalancerIP: ""  # GCP에서 자동 할당
+
+ingress:
+  enabled: false  # LoadBalancer 사용 시 Ingress 비활성화
+
+resources:
+  limits:
+    cpu: 1000m
+    memory: 1Gi
+  requests:
+    cpu: 500m
+    memory: 512Mi
+
+# Health check configuration
+livenessProbe:
+  enabled: true
+  httpGet:
+    path: /health
+    port: 8080
+  initialDelaySeconds: 30
+  periodSeconds: 10
+  timeoutSeconds: 5
+  failureThreshold: 3
+
+readinessProbe:
+  enabled: true
+  httpGet:
+    path: /health
+    port: 8080
+  initialDelaySeconds: 5
+  periodSeconds: 5
+  timeoutSeconds: 3
+  failureThreshold: 3
+
+# Horizontal Pod Autoscaler (GCP 추천 설정)
+hpa:
+  enabled: true
+  minReplicas: 1
+  maxReplicas: 5
+  targetCPUUtilizationPercentage: 80
+  targetMemoryUtilizationPercentage: 80
+
+# Environment variables for production
+env:
+  - name: NODE_ENV
+    value: "production"
+  - name: PORT
+    value: "8080"
+
+# GCP 특화 설정
+podAnnotations:
+  cloud.google.com/load-balancer-type: "External"

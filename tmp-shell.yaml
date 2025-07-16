@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: tmp-shell
+spec:
+  containers:
+    - name: tmp-shell
+      image: nicolaka/netshoot
+      command: ["sleep", "3600"]
+      resources:
+        requests:
+          cpu: "100m"
+          memory: "128Mi"
+  restartPolicy: Never

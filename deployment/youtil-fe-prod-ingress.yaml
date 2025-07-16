@@ -1,7 +1,7 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: youtil-be-ingress-prod
+  name: youtil-fe-ingress-prod
   namespace: youtil-prod
   annotations:
     kubernetes.io/ingress.class: alb
@@ -10,7 +10,7 @@ metadata:
     alb.ingress.kubernetes.io/listen-ports: '[{"HTTP":80,"HTTPS":443}]'
     alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:ap-northeast-2:854383975470:certificate/eeef5111-7aa0-411a-a2e9-456ab8c2b533
     alb.ingress.kubernetes.io/ssl-redirect: '443'
-    alb.ingress.kubernetes.io/healthcheck-path: /health
+    alb.ingress.kubernetes.io/healthcheck-path: /login
 spec:
   ingressClassName: alb
   rules:
@@ -20,6 +20,6 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: youtil-be-service-prod
+                name: youtil-fe-service-prod
                 port:
                   number: 80

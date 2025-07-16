@@ -14,13 +14,14 @@ spec:
       labels:
         app: youtil-be-prod
     spec:
-      nodeSelector:
-        node-role.kubernetes.io/worker: "true"
       containers:
         - name: youtil-be-prod
-          image: asia-northeast3-docker.pkg.dev/youtil-459908/youtil-docker-registry/youtil-be-prod:latest
+          image: 854383975470.dkr.ecr.ap-northeast-2.amazonaws.com/youtil/be-prod:latest
           imagePullPolicy: Always
           ports:
             - containerPort: 8080
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: prod
       imagePullSecrets:
         - name: regcred
