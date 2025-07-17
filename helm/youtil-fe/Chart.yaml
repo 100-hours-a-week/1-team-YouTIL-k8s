@@ -1,0 +1,9 @@
+apiVersion: v2
+name: youtil-fe
+description: A Helm chart for YouTIL Frontend
+type: application
+version: 0.1.0
+appVersion: "1.0"
+annotations:
+  app.kubernetes.io/name: youtil-fe-prod
+  app.kubernetes.io/instance: youtil-fe-prod

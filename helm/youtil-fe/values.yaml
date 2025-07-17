@@ -1,0 +1,38 @@
+namespace: youtil-prod
+replicaCount: 1
+nameOverride: youtil-fe-prod
+
+image:
+  repository: 854383975470.dkr.ecr.ap-northeast-2.amazonaws.com/youtil/fe-prod:latest
+  tag: latest
+  pullPolicy: Always
+  pullSecret: regcred
+  containerPort: 3000
+
+service:
+  name: youtil-fe-service-prod
+  type: ClusterIP
+  port: 80
+  targetPort: 3000
+
+args:
+  - "npm"
+  - "run"
+  - "start"
+
+ingress:
+  enabled: true
+  className: alb
+  annotations:
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP":80,"HTTPS":443}]'
+    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:ap-northeast-2:854383975470:certificate/eeef5111-7aa0-411a-a2e9-456ab8c2b533
+    alb.ingress.kubernetes.io/ssl-redirect: '443'
+    alb.ingress.kubernetes.io/healthcheck-path: /
+  hosts:
+    - host: youtil.co.kr
+      paths:
+        - path: /
+          pathType: Prefix
+  tls: []
