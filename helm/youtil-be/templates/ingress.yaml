@@ -2,10 +2,10 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: {{ include "youtil-backend.fullname" . }}
+  name: {{ include "youtil-be.fullname" . }}
   namespace: {{ .Release.Namespace }}
   labels:
-    {{- include "youtil-backend.labels" . | nindent 4 }}
+    {{- include "youtil-be.labels" . | nindent 4 }}
   annotations:
     {{- range $key, $value := .Values.ingress.annotations }}
     {{ $key }}: {{ $value | quote }}
@@ -22,7 +22,7 @@ spec:
             pathType: {{ .pathType }}
             backend:
               service:
-                name: {{ include "youtil-backend.fullname" $ }}
+                name: {{ include "youtil-be.fullname" $ }}
                 port:
                   number: {{ $.Values.service.port }}
           {{- end }}
