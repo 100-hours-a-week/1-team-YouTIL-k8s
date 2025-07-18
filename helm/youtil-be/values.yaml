@@ -4,8 +4,8 @@ springProfile: prod
 nameOverride: youtil-be-prod
 
 image:
-  repository: 854383975470.dkr.ecr.ap-northeast-2.amazonaws.com/youtil/be-prod:latest
-  tag: "854383975470.dkr.ecr.ap-northeast-2.amazonaws.com/youtil/fe-prod:20250717-080738"
+  repository: 854383975470.dkr.ecr.ap-northeast-2.amazonaws.com/youtil/be-prod
+  tag: latest
   pullPolicy: Always
   pullSecret: regcred
   containerPort: 8080
