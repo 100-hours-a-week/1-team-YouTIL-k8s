@@ -3,7 +3,7 @@ replicaCount: 1
 nameOverride: youtil-fe-prod
 
 image:
-  repository: 854383975470.dkr.ecr.ap-northeast-2.amazonaws.com/youtil/fe-prod:latest
+  repository: 854383975470.dkr.ecr.ap-northeast-2.amazonaws.com/youtil/fe-prod
   tag: latest
   pullPolicy: Always
   pullSecret: regcred
