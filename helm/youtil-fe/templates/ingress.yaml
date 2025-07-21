@@ -22,7 +22,7 @@ spec:
             pathType: {{ .pathType }}
             backend:
               service:
-                name: {{ include "youtil-fe.fullname" $ }}
+                name: {{ $.Values.service.name }}
                 port:
                   number: {{ $.Values.service.port }}
           {{- end }}
