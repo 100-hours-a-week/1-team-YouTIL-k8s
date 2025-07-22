@@ -27,7 +27,7 @@ ingress:
     alb.ingress.kubernetes.io/ssl-redirect: '443'
     alb.ingress.kubernetes.io/healthcheck-path: /health
   hosts:
-    - host: youtil.co.kr
+    - host: api.youtil.co.kr
       paths:
         - path: /
           pathType: Prefix
