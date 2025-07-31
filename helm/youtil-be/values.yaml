@@ -5,7 +5,7 @@ nameOverride: youtil-be-prod
 
 image:
   repository: 854383975470.dkr.ecr.ap-northeast-2.amazonaws.com/youtil/be-prod
-  tag: "20250731-042544"
+  tag: "20250731-045532"
   pullPolicy: Always
   pullSecret: regcred
   containerPort: 8080
